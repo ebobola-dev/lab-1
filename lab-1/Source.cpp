@@ -36,7 +36,7 @@ int option_ComparisonSortings();
 const char *options[OPTIONS_COUNT] = {
 	"Выход",
 	"Создать массив",
-	"Отсортировать выбором",
+	"Отсортировать линейно",
 	"Отсортировать вставкой",
 	"Отсортировать пузырьком",
 	"Поиск элемента линейно",
@@ -141,12 +141,12 @@ int option_LinearSort() {
 	uint64_t operations;
 	intArrCopy(original_arr, arr, size);
 	clock_t TS_Sort = clock();
-	printf("\nВыполняется сортировка выбором...");
+	printf("\nВыполняется линейная сортировка...");
 	operations = linear_sort(arr, size);
 	sortTime = doubleClock(clock() - TS_Sort);
 	arrSorted = 1;
 	cls();
-	printf("[Сортировка выбором выполнена за %.3f секунд (%u тыс. операций)]\n", sortTime, operations / 1000);
+	printf("[Линейная сортировка выполнена за %.3f секунд (%u тыс. операций)]\n", sortTime, operations / 1000);
 	return 0;
 }
 
@@ -264,10 +264,10 @@ int option_ComparisonSortings() {
 	// Linear
 	intArrCopy(original_arr, arr, size);
 	clock_t TS_linearSort = clock();
-	printf("\nВыполняется сортировка выбором...\n");
+	printf("\nВыполняется линейная сортировка...\n");
 	LinearSortOperations = linear_sort(arr, size);
 	LinearSortTime = doubleClock(clock() - TS_linearSort);
-	printf("Сортировка выбором выполнена -> %.3f секунд, %u тыс. операций\n", LinearSortTime, LinearSortOperations / 1000);
+	printf("Линейная сортировка выполнена -> %.3f секунд, %u тыс. операций\n", LinearSortTime, LinearSortOperations / 1000);
 
 	// Insert
 	intArrCopy(original_arr, arr, size);
@@ -288,7 +288,7 @@ int option_ComparisonSortings() {
 	cls();
 	printf("\tСРАВНЕНИЕ СОРТИРОВОК (%d эл-ов)\n\n", size);
 	printf("%9s\t%11s\t%21s\n", "Вид", "Время(сек)", "кол-во операций(тыс)");
-	printf("%9s\t%11.3f\t%21u\n", "Выбором", LinearSortTime, LinearSortOperations);
+	printf("%9s\t%11.3f\t%21u\n", "Линейная", LinearSortTime, LinearSortOperations);
 	printf("%9s\t%11.3f\t%21u\n", "Вставкой", InsertSortTime, InsertSortOperations);
 	printf("%9s\t%11.3f\t%21u\n", "Пузырьком", BubbleSortTime, BubbleSortOperations);
 
