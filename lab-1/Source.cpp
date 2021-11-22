@@ -7,7 +7,7 @@
 #include <limits.h>
 
 #define MAX_SIZE 1000000
-#define OPTIONS_COUNT 9
+#define OPTIONS_COUNT 10
 
 void cls();
 double doubleClock(clock_t);
@@ -32,6 +32,7 @@ int option_LinearSearch();
 int option_BarrierSearch();
 int option_BinarySearch();
 int option_ComparisonSortings();
+int option_PrintArray();
 
 const char *options[OPTIONS_COUNT] = {
 	"Выход",
@@ -43,6 +44,7 @@ const char *options[OPTIONS_COUNT] = {
 	"Поиск элемента с барьером",
 	"Бинарный поиск элемента",
 	"Сравнение сортировок",
+	"Вывести массив на экран",
 };
 
 int size, option = 1;
@@ -91,8 +93,14 @@ int main() {
 			case 8:
 				option_ComparisonSortings();
 				break;
+			case 9:
+				option_PrintArray();
+				break;
 		}
 	}
+	free(arr);
+	free(original_arr);
+	return 0;
 }
 
 int option_CreateArr() {
@@ -105,6 +113,8 @@ int option_CreateArr() {
 			return 1;
 		}
 	}
+	free(arr);
+	free(original_arr);
 	entIntVar(&size, 1, MAX_SIZE, "\nВведите размер массива");
 	arr = createIntArr(size);
 	original_arr = createIntArr(size);
@@ -297,6 +307,23 @@ int option_ComparisonSortings() {
 	return 0;
 }
 
+int option_PrintArray() {
+	if (!arrAdded) {
+		cls();
+		printf("!Массив ещё не создан!\n");
+		return 1;
+	}
+	cls();
+	printf("Если длина массива больше 20, выводятся первые 20\n");
+	printf("Оригинальный массив:\n");
+	print_arr(original_arr, size);
+	printf("\n\nАктивный массив:\n");
+	print_arr(arr, size);
+	printf("\n\n");
+
+	return 0;
+}
+
 void entIntVar(int* var, int min, int max, const char* str) {
 	int ch = 0, a = 0;
 	do {
@@ -344,8 +371,13 @@ void intArrCopy(int* from, int* to, int size) {
 }
 
 void print_arr(int arr[], int size) {
+	int n = size > 20 ? 20 : size;
 	printf("[ ");
-	for (int i = 0; i < size; printf("%d ", arr[i++]));
+	for (int i = 0; i < n; i++) {
+		if (i % 4 == 0 && i != 0) printf("\n  ");
+		printf("%d ", arr[i]);
+	}
+	if (size > 20) printf("...(%d) ", size - 20);
 	printf("]");
 }
 
