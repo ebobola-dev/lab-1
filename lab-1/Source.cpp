@@ -112,9 +112,9 @@ int option_CreateArr() {
 			cls();
 			return 1;
 		}
+		free(arr);
+		free(original_arr);
 	}
-	free(arr);
-	free(original_arr);
 	entIntVar(&size, 1, MAX_SIZE, "\n¬ведите размер массива");
 	arr = createIntArr(size);
 	original_arr = createIntArr(size);
@@ -458,10 +458,13 @@ int linear_find(int arr[], int size, int x) {
 }
 
 int barrier_find(int arr[], int size, int x) {
-	arr[size] = x;
+	int last = arr[size - 1];
+	arr[size - 1] = x;
 	int i = 0;
 	while (arr[i] != x) i++;
-	if (i == size) i = -1;
+	if (i == size - 1) i = -1;
+	if (last == x) i = size - 1;
+	arr[size - 1] = last;
 	return i;
 }
 
